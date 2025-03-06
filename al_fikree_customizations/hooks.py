@@ -213,3 +213,15 @@ app_license = "MIT"
 # auth_hooks = [
 # 	"al_fikree_customizations.auth.validate"
 # ]
+
+
+app_include_js = ["/assets/al_fikree_customizations/js/ticket_allowance_creation.js",
+                  "/assets/al_fikree_customizations/js/autofetch_expiry_employee.js"
+                  ] 
+
+
+
+after_install = "al_fikree_customizations.install.after_install"
+after_migrate = ["al_fikree_customizations.api.after_migrate","al_fikree_customizations.install.after_migrate"]
+
+fixtures = ["Custom Field"]
