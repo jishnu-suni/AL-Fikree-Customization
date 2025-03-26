@@ -225,3 +225,11 @@ after_install = "al_fikree_customizations.install.after_install"
 after_migrate = ["al_fikree_customizations.api.after_migrate","al_fikree_customizations.install.after_migrate"]
 
 fixtures = ["Custom Field"]
+
+
+# doc_events = {
+# 	"Salary Slip": {
+# 		"validate": "al_fikree_customizations.public.python.overtime_calculation.validate",
+		
+# 	}
+# }

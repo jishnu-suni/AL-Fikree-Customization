@@ -1,0 +1,68 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:-SF-{month_start_date}-{####}",
+ "creation": "2025-03-26 10:24:21.899789",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "month_start_date",
+  "column_break_sotmt",
+  "month_end_date",
+  "section_break_2egxj",
+  "safe_worker_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "month_start_date",
+   "fieldtype": "Date",
+   "label": "Month Start Date"
+  },
+  {
+   "fieldname": "month_end_date",
+   "fieldtype": "Date",
+   "label": "Month End Date"
+  },
+  {
+   "fieldname": "safe_worker_details",
+   "fieldtype": "Table",
+   "label": "Safe Worker Details",
+   "options": "Safe Worker Details"
+  },
+  {
+   "fieldname": "column_break_sotmt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_2egxj",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-03-26 10:27:47.053569",
+ "modified_by": "Administrator",
+ "module": "Al Fikree Customizations",
+ "name": "Safe Worker",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
