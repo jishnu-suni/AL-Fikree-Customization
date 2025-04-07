@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:-SF-{month_start_date}-{####}",
+ "autoname": "format:SF-{month_start_date}-{####}",
  "creation": "2025-03-26 10:24:21.899789",
  "default_view": "List",
  "doctype": "DocType",
@@ -42,7 +42,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-26 10:27:47.053569",
+ "modified": "2025-03-31 19:22:01.002309",
  "modified_by": "Administrator",
  "module": "Al Fikree Customizations",
  "name": "Safe Worker",

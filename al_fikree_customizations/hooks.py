@@ -227,9 +227,9 @@ after_migrate = ["al_fikree_customizations.api.after_migrate","al_fikree_customi
 fixtures = ["Custom Field"]
 
 
-# doc_events = {
-# 	"Salary Slip": {
-# 		"validate": "al_fikree_customizations.public.python.overtime_calculation.validate",
+doc_events = {
+	"Salary Slip": {
+		"validate": "al_fikree_customizations.public.python.salary_slip_ot_calculation.validate",
 		
-# 	}
-# }
+	},
+}
