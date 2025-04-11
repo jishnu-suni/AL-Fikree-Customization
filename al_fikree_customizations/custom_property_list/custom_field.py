@@ -1,6 +1,13 @@
 CUSTOM_FIELD = {
     "Employee":[
         {
+            "dt": "Employee",
+            "fieldname": "custom_fetch_wage_from_salary_structure",
+            "fieldtype": "Check",
+            "label": "Fetch Wage From Salary Structure",
+            "insert_after": "wage_details",
+        },
+        {
             
     
             "dt": "Employee",

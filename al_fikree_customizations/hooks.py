@@ -216,7 +216,8 @@ app_license = "MIT"
 
 
 app_include_js = ["/assets/al_fikree_customizations/js/ticket_allowance_creation.js",
-                  "/assets/al_fikree_customizations/js/autofetch_expiry_employee.js"
+                  "/assets/al_fikree_customizations/js/autofetch_expiry_employee.js",
+                  "/assets/al_fikree_customizations/js/wage_from_salary_structure.js"
                   ] 
 
 
@@ -224,7 +225,6 @@ app_include_js = ["/assets/al_fikree_customizations/js/ticket_allowance_creation
 after_install = "al_fikree_customizations.install.after_install"
 after_migrate = ["al_fikree_customizations.api.after_migrate","al_fikree_customizations.install.after_migrate"]
 
-fixtures = ["Custom Field"]
 
 
 doc_events = {
