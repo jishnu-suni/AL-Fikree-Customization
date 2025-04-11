@@ -237,5 +237,3 @@ doc_events = {
 		"on_cancel": "al_fikree_customizations.public.python.labour_leave_marking.on_cancel"
 	}
 }
-
-fixtures = ["Property Setter"]

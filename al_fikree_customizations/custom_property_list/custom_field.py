@@ -1518,5 +1518,5 @@ CUSTOM_FIELD = {
             "options":"Labour Attendance And Overtime"
 
         },
-    ]
+    ],
     }
