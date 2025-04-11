@@ -12,5 +12,12 @@ def get_property_setters():
             # "value":"eval:doc.employment_type in [\"Labour\", \"Full time\"]"
 
             
-        },       
+        },
+        {
+            "doctype": "Labour Attendance And Overtime",
+            "fieldname": "status",
+            "property": "options",
+            "property_type": "Text",
+            "value": "\nFull Day\nHalf Day\nAbsent\nMedical\nSick\nLeave",
+        } 
     ]

@@ -232,4 +232,10 @@ doc_events = {
 		"validate": "al_fikree_customizations.public.python.salary_slip_ot_calculation.validate",
 		
 	},
+    "Labour Attendance And Overtime":{
+        "on_submit": "al_fikree_customizations.public.python.labour_leave_marking.create_attendance_for_leave",
+		"on_cancel": "al_fikree_customizations.public.python.labour_leave_marking.on_cancel"
+	}
 }
+
+fixtures = ["Property Setter"]

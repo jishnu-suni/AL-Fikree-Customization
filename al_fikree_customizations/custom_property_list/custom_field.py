@@ -1496,5 +1496,27 @@ CUSTOM_FIELD = {
                 "read_only": 1,
 
             },
-        ]
+        ],
+    "Attendance":[
+        {
+            "dt":"Attendance",
+            "fieldname": "custom_leave_type",
+            "fieldtype": "Select",
+            "label": "Leave Type",
+            "insert_after": "status",
+            "read_only": 1,
+            "options":"\nMedical\nSick\nLeave"
+
+        },
+        {
+            "dt":"Attendance",
+            "fieldname": "custom_reference_labour_attendance_and_overtime",
+            "fieldtype": "Link",
+            "label": "Reference Labour Attendance And Overtime",
+            "insert_after": "company",
+            "read_only": 1,
+            "options":"Labour Attendance And Overtime"
+
+        },
+    ]
     }
