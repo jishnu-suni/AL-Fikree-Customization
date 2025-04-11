@@ -1,17 +1,8 @@
 CUSTOM_FIELD = {
     "Employee":[
         {
-            "allow_in_quick_entry": 0,
-            "allow_on_submit": 0,
-            "bold": 0,
-            "collapsible": 0,
-            "collapsible_depends_on": "",
-            "columns": 0,
-            "default": "",
-            "depends_on": "",
-            "description": "",
-            "docstatus": 0,
-            "doctype": "Custom Field",
+            
+    
             "dt": "Employee",
             "fetch_from": "",
             "fetch_if_empty": 0,
