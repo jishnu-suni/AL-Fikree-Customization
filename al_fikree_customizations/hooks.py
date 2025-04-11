@@ -221,6 +221,7 @@ app_include_js = ["/assets/al_fikree_customizations/js/ticket_allowance_creation
                   ] 
 
 
+fixtures = ["Custom DocPerm"]
 
 after_install = "al_fikree_customizations.install.after_install"
 after_migrate = ["al_fikree_customizations.api.after_migrate","al_fikree_customizations.install.after_migrate"]
