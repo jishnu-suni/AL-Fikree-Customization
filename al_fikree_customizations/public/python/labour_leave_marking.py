@@ -4,22 +4,30 @@ def create_attendance_for_leave(doc,event):
     if not doc.enable_multiple_employee:
         # check_attendance_already_marked =  frappe.db.get_all("Labour Attendance",filters = {"employee":doc.employee,"attendance_date":doc.date})
         if doc.status:
-            if doc.status in ["Medical","Sick","Leave"]:
-                create_leave_attendance(doc.employee,doc.date,doc.status,doc.name)
+            if doc.status in ["Medical","Sick"]:
+                attendance_status = "On Leave"
+                create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name)
+            if doc.status in ["Leave","Absent"]:
+                attendance_status = "Absent"
+                create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name)
     else:
         for employee in doc.employee_list:
             # check_attendance_already_marked =  frappe.db.get_all("Labour Attendance",filters = {"employee":employee.employee,"attendance_date":doc.date})
             if employee.status:   
-                if employee.status in ["Medical","Sick","Leave"]:
-                    create_leave_attendance(employee.employee,doc.date,employee.status,doc.name)  
+                if employee.status in ["Medical","Sick"]:
+                    attendance_status = "On Leave"
+                    create_leave_attendance(employee.employee,doc.date,attendance_status,employee.status,doc.name)  
+                if employee.status in ["Leave","Absent"]:
+                    attendance_status = "Absent"
+                    create_leave_attendance(employee.employee,doc.date,attendance_status,employee.status,doc.name)  
 
 
-def create_leave_attendance(employee,date,status,reference):
+def create_leave_attendance(employee,date,attendance_status,status,reference):
 	leave_attendance = frappe.get_doc({
 		"doctype": "Attendance",
 		"employee": employee,
 		"attendance_date": date,  # Map date to attendance_date
-		"status": "On Leave",
+		"status": attendance_status,
         "custom_leave_type":status,
 		"custom_reference_labour_attendance_and_overtime":reference,
 	})

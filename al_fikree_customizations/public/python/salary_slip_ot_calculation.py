@@ -115,7 +115,7 @@ def ot_and_extra_hours_appending(doc, event):
     holidays = frappe.db.count("Holiday", filters={
         "holiday_date": ["between",(doc.start_date, doc.end_date)]
     })
-    total_days = doc.total_working_days + holidays
+    total_days = doc.payment_days + holidays
     total_working_days = doc.total_working_days
     # total_earnings = frappe.db.get_value("Salary Structure",doc.salary_structure,"custom_total_earnings")
     salary_structure = frappe.get_doc("Salary Structure", doc.salary_structure)
@@ -123,11 +123,22 @@ def ot_and_extra_hours_appending(doc, event):
         component.amount for component in salary_structure.earnings if component.amount
     )
     this_month_salary = total_days * (total_earnings/30)
-
     extra_allowance_hours = extra_allowance_hours
     extra_allowance_amount = (total_earnings/30/8)*extra_allowance_hours
     overtime_amount = (total_earnings/30/8)*ot_hours
-    total_amount_to_paid = this_month_salary + overtime_amount + extra_allowance_amount
+
+    absent_count = frappe.db.count("Attendance", {
+        "employee": doc.employee,
+        "attendance_date": ["between", [doc.start_date, doc.end_date]],
+        "status": "Absent",
+        "custom_leave_type": "Absent",
+        "docstatus": 1 
+    })
+    if absent_count:
+        deduction_amount = (total_earnings/30)*absent_count
+        total_amount_to_paid = this_month_salary + overtime_amount + extra_allowance_amount - deduction_amount
+    else:
+        total_amount_to_paid = this_month_salary + overtime_amount + extra_allowance_amount
 
     doc.custom_overtime_hours = ot_hours
     doc.custom_extra_hours = extra_allowance_hours
@@ -175,9 +186,16 @@ def ot_and_extra_hours_appending(doc, event):
             existing_component.amount = extra_allowance_total
         else:
             doc.append("earnings", {"salary_component": extra_hours_component, "amount": extra_allowance_total})
-    doc.append("earnings", {"salary_component": "Holiday OT", "amount": 0})
-    doc.append("earnings", {"salary_component": "Friday OT", "amount": 0})
     
+    existing_salary_components = [earning.salary_component for earning in doc.earnings]
+    if "Holiday OT" not in existing_salary_components:
+        doc.append("earnings", {"salary_component": "Holiday OT", "amount": 0})
+
+    if "Friday OT" not in existing_salary_components:
+        doc.append("earnings", {"salary_component": "Friday OT", "amount": 0})
+
+
+
     doc.gross_pay = sum(e.amount for e in doc.earnings if e.amount)
     doc.base_gross_pay = sum(e.amount for e in doc.earnings if e.amount)
     doc.gross_year_to_date = sum(e.amount for e in doc.earnings if e.amount)

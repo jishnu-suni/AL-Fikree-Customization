@@ -1503,7 +1503,7 @@ CUSTOM_FIELD = {
             "label": "Leave Type",
             "insert_after": "status",
             "read_only": 1,
-            "options":"\nMedical\nSick\nLeave"
+            "options":"\nMedical\nSick\nLeave\nAbsent"
 
         },
         {

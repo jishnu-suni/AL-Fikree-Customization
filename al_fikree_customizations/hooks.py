@@ -227,7 +227,6 @@ after_install = "al_fikree_customizations.install.after_install"
 after_migrate = ["al_fikree_customizations.api.after_migrate","al_fikree_customizations.install.after_migrate"]
 
 
-
 doc_events = {
 	"Salary Slip": {
 		"validate": "al_fikree_customizations.public.python.salary_slip_ot_calculation.validate",
