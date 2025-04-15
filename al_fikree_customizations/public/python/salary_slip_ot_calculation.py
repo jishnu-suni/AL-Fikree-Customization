@@ -44,6 +44,7 @@ def append_safe_worker_earning(doc, method):
 
 
 def ot_and_extra_hours_appending(doc, event):
+    print("-------------lllllllllllllllllllllll")
     # Check if 'show_overtime_amount_in_salary_slip' is enabled in Labour Wage Settings
     labour_wage_settings = frappe.get_doc("Labour Wage Settings")
 
@@ -59,7 +60,27 @@ def ot_and_extra_hours_appending(doc, event):
     )
     
     if not labour_payment_summary:
-        return
+        doc.earnings = [
+            earning for earning in doc.earnings
+            if earning.salary_component != "Extra Allowance"
+        ]
+        existing_salary_components = [earning.salary_component for earning in doc.earnings]
+        if "Holiday OT" not in existing_salary_components:
+            doc.append("earnings", {"salary_component": "Holiday OT", "amount": 0})
+
+        if "Friday OT" not in existing_salary_components:
+            doc.append("earnings", {"salary_component": "Friday OT", "amount": 0})
+
+        doc.gross_pay = sum(e.amount for e in doc.earnings if e.amount)
+        doc.base_gross_pay = sum(e.amount for e in doc.earnings if e.amount)
+        doc.gross_year_to_date = sum(e.amount for e in doc.earnings if e.amount)
+        doc.total_deduction = sum(d.amount for d in doc.deductions if d.amount)
+        doc.net_pay = doc.base_gross_pay - doc.total_deduction
+        doc.rounded_total = doc.base_gross_pay - doc.total_deduction
+        doc.base_rounded_total = doc.base_gross_pay - doc.total_deduction
+        doc.base_net_pay = doc.base_gross_pay - doc.total_deduction
+        doc.year_to_date = doc.base_gross_pay - doc.total_deduction
+        doc.month_to_date = doc.base_gross_pay - doc.total_deduction
     
     # Fetch Labour Attendance And Overtime Summary
     attendance_overtime_summary = frappe.get_all(
@@ -105,10 +126,6 @@ def ot_and_extra_hours_appending(doc, event):
                     extra_allowance_total += (payable_amount * detail.custom_extra_hours / detail.hours)
                     extra_allowance_hours += detail.custom_extra_hours
 
-
-    
-    
-    
     # Append Extra Allowance if applicable
 
     # total_earnings = frappe.db.get_value("Salary Structure",doc.salary_structure,"custom_total_earnings")
@@ -147,6 +164,8 @@ def ot_and_extra_hours_appending(doc, event):
     doc.custom_extra_hour_amount = extra_allowance_amount
 
     # Map OT type to Salary Component
+
+    print("entered to if --------------------")
     ot_component_map = {
         row.applicable_days: {
             "salary_component": row.salary_component,
@@ -157,8 +176,8 @@ def ot_and_extra_hours_appending(doc, event):
     extra_hours_component = labour_wage_settings.extra_hours_salary_component
     # Get existing salary components
     existing_components = {earning.salary_component for earning in doc.earnings}
-    
-    # Add earnings rows for OT wage
+
+# Add earnings rows for OT wage
     for ot_type, amount in ot_amounts.items():
         if ot_type in ot_component_map and amount > 0:
             salary_component = ot_component_map[ot_type]["salary_component"]
@@ -168,7 +187,6 @@ def ot_and_extra_hours_appending(doc, event):
                     "salary_component": salary_component,
                     "amount": float(overtime_amount) * float(wage_rate)
                 })
-
 
     for basic in doc.earnings:
         if basic.salary_component == "Basic":
@@ -186,6 +204,8 @@ def ot_and_extra_hours_appending(doc, event):
             existing_component.amount = extra_allowance_total
         else:
             doc.append("earnings", {"salary_component": extra_hours_component, "amount": extra_allowance_total})
+        
+
     
     existing_salary_components = [earning.salary_component for earning in doc.earnings]
     if "Holiday OT" not in existing_salary_components:
