@@ -44,7 +44,6 @@ def append_safe_worker_earning(doc, method):
 
 
 def ot_and_extra_hours_appending(doc, event):
-    print("-------------lllllllllllllllllllllll")
     # Check if 'show_overtime_amount_in_salary_slip' is enabled in Labour Wage Settings
     labour_wage_settings = frappe.get_doc("Labour Wage Settings")
 
@@ -165,7 +164,6 @@ def ot_and_extra_hours_appending(doc, event):
 
     # Map OT type to Salary Component
 
-    print("entered to if --------------------")
     ot_component_map = {
         row.applicable_days: {
             "salary_component": row.salary_component,
@@ -187,6 +185,8 @@ def ot_and_extra_hours_appending(doc, event):
                     "salary_component": salary_component,
                     "amount": float(overtime_amount) * float(wage_rate)
                 })
+    normal_ot = 0
+    basic_amount = 0
 
     for basic in doc.earnings:
         if basic.salary_component == "Basic":
