@@ -139,7 +139,11 @@ def ot_and_extra_hours_appending(doc, event):
     total_earnings = sum(
         component.amount for component in salary_structure.earnings if component.amount
     )
+    print("total days",total_days)
+
     this_month_salary = total_days * (total_earnings/30)
+
+    print("this month salary",this_month_salary)
     extra_allowance_hours = extra_allowance_hours
     extra_allowance_amount = (total_earnings/30/8)*extra_allowance_hours
     overtime_amount = (total_earnings/30/8)*ot_hours
@@ -151,11 +155,27 @@ def ot_and_extra_hours_appending(doc, event):
         "custom_leave_type": "Absent",
         "docstatus": 1 
     })
+
+    half_day_count = frappe.db.count("Attendance", {
+        "employee": doc.employee,
+        "attendance_date": ["between", [doc.start_date, doc.end_date]],
+        "status": "Half Day",
+        "custom_leave_type": "Absent",
+        "docstatus": 1 
+    })
+    total_amount_to_paid = this_month_salary + overtime_amount + extra_allowance_amount
+    
+    
     if absent_count:
         deduction_amount = (total_earnings/30)*absent_count
-        total_amount_to_paid = this_month_salary + overtime_amount + extra_allowance_amount - deduction_amount
-    else:
-        total_amount_to_paid = this_month_salary + overtime_amount + extra_allowance_amount
+        total_amount_to_paid = total_amount_to_paid - deduction_amount
+    
+    if half_day_count:
+        half_day_amount = (total_earnings/30)/2
+        deduction_amount = half_day_amount * half_day_count
+        total_amount_to_paid = total_amount_to_paid - deduction_amount
+    
+    total_amount_to_paid = round(total_amount_to_paid)
 
     doc.custom_overtime_hours = ot_hours
     doc.custom_extra_hours = extra_allowance_hours

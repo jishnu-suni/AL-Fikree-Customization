@@ -237,3 +237,5 @@ doc_events = {
 		"on_cancel": "al_fikree_customizations.public.python.labour_leave_marking.on_cancel"
 	}
 }
+
+doctype_js = {"Labour Attendance And Overtime" : "public/js/override_button_labour_attendance_and_overtime.js"}

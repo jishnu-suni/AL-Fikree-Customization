@@ -19,5 +19,12 @@ def get_property_setters():
             "property": "options",
             "property_type": "Text",
             "value": "\nFull Day\nHalf Day\nAbsent\nMedical\nSick\nLeave",
+        } ,
+        {
+            "doctype": "Labour Attendance And Overtime Employee",
+            "fieldname": "status",
+            "property": "options",
+            "property_type": "Text",
+            "value": "\nFull Day\nHalf Day\nAbsent\nMedical\nSick\nLeave",
         } 
     ]

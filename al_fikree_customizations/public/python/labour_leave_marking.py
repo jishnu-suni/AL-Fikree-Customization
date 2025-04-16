@@ -5,24 +5,45 @@ def create_attendance_for_leave(doc,event):
         # check_attendance_already_marked =  frappe.db.get_all("Labour Attendance",filters = {"employee":doc.employee,"attendance_date":doc.date})
         if doc.status:
             if doc.status in ["Medical","Sick"]:
-                attendance_status = "On Leave"
-                create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name)
+                if doc.custom_is_half_day:
+                    attendance_status = "Half Day"
+                    leave_type = "Sick Leave"
+                    create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name,leave_type=leave_type)
+                else:
+                    attendance_status = "On Leave"
+                    create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name)
             if doc.status in ["Leave","Absent"]:
-                attendance_status = "Absent"
-                create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name)
+                if doc.custom_is_half_day:
+                    attendance_status = "Half Day"
+                    leave_type = "Leave Without Pay"
+                    create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name,leave_type=leave_type)
+                else:
+                    attendance_status = "Absent"
+                    create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name)
     else:
         for employee in doc.employee_list:
             # check_attendance_already_marked =  frappe.db.get_all("Labour Attendance",filters = {"employee":employee.employee,"attendance_date":doc.date})
             if employee.status:   
                 if employee.status in ["Medical","Sick"]:
-                    attendance_status = "On Leave"
-                    create_leave_attendance(employee.employee,doc.date,attendance_status,employee.status,doc.name)  
+                    if employee.custom_is_half_day:
+                        attendance_status = "Half Day"
+                        leave_type = "Sick Leave"
+                        create_leave_attendance(doc.employee,doc.date,attendance_status,doc.status,doc.name,leave_type=leave_type)
+                    else:
+                        attendance_status = "On Leave"
+                        create_leave_attendance(employee.employee,doc.date,attendance_status,employee.status,doc.name,leave_type=None)  
                 if employee.status in ["Leave","Absent"]:
-                    attendance_status = "Absent"
-                    create_leave_attendance(employee.employee,doc.date,attendance_status,employee.status,doc.name)  
+                    if employee.custom_is_half_day:
+                        attendance_status = "Half Day"
+                        leave_type = "Leave Without Pay"
+                        print(doc.employee,doc.date,attendance_status,doc.status,doc.name)
+                        create_leave_attendance(employee.employee,doc.date,attendance_status,employee.status,doc.name,leave_type=None)
+                    else:
+                        attendance_status = "Absent"
+                        create_leave_attendance(employee.employee,doc.date,attendance_status,employee.status,doc.name,leave_type=None)  
 
 
-def create_leave_attendance(employee,date,attendance_status,status,reference):
+def create_leave_attendance(employee,date,attendance_status,status,reference,leave_type = None):
 	leave_attendance = frappe.get_doc({
 		"doctype": "Attendance",
 		"employee": employee,
@@ -30,6 +51,7 @@ def create_leave_attendance(employee,date,attendance_status,status,reference):
 		"status": attendance_status,
         "custom_leave_type":status,
 		"custom_reference_labour_attendance_and_overtime":reference,
+        "leave_type":leave_type
 	})
 	leave_attendance.insert(ignore_permissions=True)
 	leave_attendance.submit()
