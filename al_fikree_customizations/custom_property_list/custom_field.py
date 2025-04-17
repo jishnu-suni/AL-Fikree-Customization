@@ -1516,25 +1516,5 @@ CUSTOM_FIELD = {
             "options":"Labour Attendance And Overtime"
 
         },
-    ],
-    "Labour Attendance And Overtime":[
-        {
-            "dt": "Labour Attendance And Overtime",
-            "fieldname": "custom_is_half_day",
-            "fieldtype": "Check",
-            "label": "Is Half Day",
-            "insert_after": "status",
-            "depends_on": "eval: ['Medical', 'Sick', 'Leave','Absent'].includes(doc.status)"
-        }
-    ],
-    "Labour Attendance And Overtime Employee":[
-        {
-            "dt": "Labour Attendance And Overtime Employee",
-            "fieldname": "custom_is_half_day",
-            "fieldtype": "Check",
-            "label": "Is Half Day",
-            "insert_after": "status",
-            "depends_on": "eval: ['Medical', 'Sick', 'Leave','Absent'].includes(doc.status)"
-        }
     ]
     }

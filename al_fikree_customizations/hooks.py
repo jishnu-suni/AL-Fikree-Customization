@@ -215,27 +215,33 @@ app_license = "MIT"
 # ]
 
 
-app_include_js = ["/assets/al_fikree_customizations/js/ticket_allowance_creation.js",
-                  "/assets/al_fikree_customizations/js/autofetch_expiry_employee.js",
-                  "/assets/al_fikree_customizations/js/wage_from_salary_structure.js"
-                  ] 
+app_include_js = [
+    "/assets/al_fikree_customizations/js/ticket_allowance_creation.js",
+    "/assets/al_fikree_customizations/js/autofetch_expiry_employee.js",
+    "/assets/al_fikree_customizations/js/wage_from_salary_structure.js",
+]
 
 
 fixtures = ["Custom DocPerm"]
 
 after_install = "al_fikree_customizations.install.after_install"
-after_migrate = ["al_fikree_customizations.api.after_migrate","al_fikree_customizations.install.after_migrate"]
+after_migrate = [
+    "al_fikree_customizations.api.after_migrate",
+    "al_fikree_customizations.install.after_migrate",
+]
 
 
 doc_events = {
-	"Salary Slip": {
-		"validate": "al_fikree_customizations.public.python.salary_slip_ot_calculation.validate",
-		
-	},
-    "Labour Attendance And Overtime":{
+    "Salary Slip": {
+        "validate": "al_fikree_customizations.public.python.salary_slip_ot_calculation.validate",
+    },
+    "Labour Attendance And Overtime": {
         "on_submit": "al_fikree_customizations.public.python.labour_leave_marking.create_attendance_for_leave",
-		"on_cancel": "al_fikree_customizations.public.python.labour_leave_marking.on_cancel"
-	}
+        "on_cancel": "al_fikree_customizations.public.python.labour_leave_marking.on_cancel",
+        "validate": "al_fikree_customizations.public.python.labour_attendance_and_overtime_validate.validate_duplicate_attendance",
+    },
 }
 
-doctype_js = {"Labour Attendance And Overtime" : "public/js/override_button_labour_attendance_and_overtime.js"}
+doctype_js = {
+    "Labour Attendance And Overtime": "public/js/override_button_labour_attendance_and_overtime.js"
+}
