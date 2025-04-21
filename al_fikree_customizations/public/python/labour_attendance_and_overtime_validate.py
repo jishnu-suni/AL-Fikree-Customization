@@ -54,6 +54,33 @@ def check_attendance_conflicts(employee_id, attendance_date, current_doc_name, i
 
     # If current doc is half day, check if already 2 half-days exist (Labour or Attendance)
     else:
+        existing_full_day_labour = frappe.db.exists(
+            "Labour Attendance",
+            {
+                "employee": employee_id,
+                "attendance_date": attendance_date,
+                "docstatus": 1,
+            }
+        )
+
+        if existing_full_day_labour:
+            frappe.throw(_(
+                f"Labour Attendance already marked as Full Day for employee <b>{employee_name}</b> on <b>{attendance_date}</b> (Doc: {existing_full_day_labour})."
+            ))
+
+        # Check Attendance with status other than Half Day exists
+        existing_non_half_attendance = frappe.db.exists(
+            "Attendance",
+            {
+                "employee": employee_id,
+                "attendance_date": attendance_date,
+                "docstatus": 1,
+            }
+        )
+        if existing_non_half_attendance:
+            frappe.throw(_(
+                f"Attendance already marked employee <b>{employee_name}</b> on <b>{attendance_date}</b> (Doc: {existing_non_half_attendance})."
+            ))
         # Get all half-day Labour Attendance entries for that day
         half_day_labour_attendances = frappe.get_all(
             "Labour Attendance",
