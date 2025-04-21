@@ -44,7 +44,7 @@ def check_attendance_conflicts(employee_id, attendance_date, current_doc_name, i
             {
                 "employee": employee_id,
                 "attendance_date": attendance_date,
-                "docstatus": 1,
+                "docstatus": 1
             }
         )
         if existing_non_half_attendance:
@@ -59,6 +59,7 @@ def check_attendance_conflicts(employee_id, attendance_date, current_doc_name, i
             {
                 "employee": employee_id,
                 "attendance_date": attendance_date,
+                 "status": "Full Day",
                 "docstatus": 1,
             }
         )
@@ -75,6 +76,7 @@ def check_attendance_conflicts(employee_id, attendance_date, current_doc_name, i
                 "employee": employee_id,
                 "attendance_date": attendance_date,
                 "docstatus": 1,
+                "status": ["!=", "Half Day"],
             }
         )
         if existing_non_half_attendance:
@@ -108,7 +110,7 @@ def check_attendance_conflicts(employee_id, attendance_date, current_doc_name, i
         total_half_days = len(half_day_labour_attendances) + len(half_day_attendances)
 
         # If already 2 half-days are marked, throw error
-        if total_half_days >= 2:
+        if total_half_days > 2:
             sources = [d["name"] for d in half_day_labour_attendances + half_day_attendances]
             source_list = ", ".join(sources)
             frappe.throw(_(
