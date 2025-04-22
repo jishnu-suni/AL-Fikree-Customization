@@ -242,6 +242,4 @@ doc_events = {
     },
 }
 
-doctype_js = {
-    "Labour Attendance And Overtime": "public/js/override_button_labour_attendance_and_overtime.js"
-}
+
