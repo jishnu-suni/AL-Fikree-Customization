@@ -139,11 +139,8 @@ def ot_and_extra_hours_appending(doc, event):
     total_earnings = sum(
         component.amount for component in salary_structure.earnings if component.amount
     )
-    print("total days",total_days)
-
     this_month_salary = total_days * (total_earnings/30)
-
-    print("this month salary",this_month_salary)
+    this_month_salary = round(this_month_salary,2)
     extra_allowance_hours = extra_allowance_hours
     extra_allowance_amount = (total_earnings/30/8)*extra_allowance_hours
     overtime_amount = (total_earnings/30/8)*ot_hours
@@ -164,7 +161,6 @@ def ot_and_extra_hours_appending(doc, event):
         "docstatus": 1 
     })
     total_amount_to_paid = this_month_salary + overtime_amount + extra_allowance_amount
-    
     
     if absent_count:
         deduction_amount = (total_earnings/30)*absent_count
