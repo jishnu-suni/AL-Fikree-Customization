@@ -222,7 +222,7 @@ app_include_js = [
 ]
 
 
-fixtures = ["Custom DocPerm"]
+fixtures = ["Custom DocPerm","Workspace"]
 
 after_install = "al_fikree_customizations.install.after_install"
 after_migrate = [
