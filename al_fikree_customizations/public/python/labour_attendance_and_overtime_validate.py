@@ -108,11 +108,6 @@ def check_attendance_conflicts(employee_id, attendance_date, current_doc_name, i
         )
 
         total_half_days = len(half_day_labour_attendances) + len(half_day_attendances)
-        print(total_half_days)
-        print(half_day_labour_attendances)
-        print(half_day_attendances)
-        print(len(half_day_labour_attendances))
-        print(len(half_day_attendances))
         # If already 2 half-days are marked, throw error
         if total_half_days >= 2:
             sources = [d["name"] for d in half_day_labour_attendances + half_day_attendances]

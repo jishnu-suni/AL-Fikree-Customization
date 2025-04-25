@@ -1,9 +1,4 @@
 frappe.ui.form.on('Employee', {
-    refresh: function(frm) {
-        calculate_ticket_allowance_due(frm);
-        frm.set_df_property('custom_ticket_allowance_due_in', 'read_only', 1);
-    },
-
     date_of_joining: function(frm) {
         calculate_ticket_allowance_due(frm);
     },
@@ -14,7 +9,19 @@ frappe.ui.form.on('Employee', {
 
     custom_ticket_allowance_due_in: function(frm) {
         toggle_add_ticket_allowance_visibility(frm);
-    }
+    },
+    on_load: function(frm) {
+        if (!frm.doc.__islocal && !frm.doc.__ticket_due_updated) {
+            calculate_ticket_allowance_due(frm);
+            frm.set_value('__ticket_due_updated', 1);
+            frm.save();
+        }
+
+        frm.set_df_property('custom_ticket_allowance_due_in', 'read_only', 1);
+        // calculate_ticket_allowance_due(frm);
+        // frm.set_df_property('custom_ticket_allowance_due_in', 'read_only', 1);
+    },
+
 });
 
 function calculate_ticket_allowance_due(frm) {

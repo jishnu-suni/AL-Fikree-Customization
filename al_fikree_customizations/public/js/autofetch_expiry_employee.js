@@ -1,18 +1,37 @@
 frappe.ui.form.on('Employee', {
     valid_upto: function(frm) {
         update_days_left(frm, 'valid_upto', 'custom_days_left_passport');
+        
     },
 
     emirates_id_expiry_date: function(frm) {
         update_days_left(frm, 'custom_emirates_id_expiry_date', 'custom_emirated_id_expiry_days');
-    },
 
-    refresh: function(frm) {
-        update_days_left(frm, 'valid_upto', 'custom_days_left_passport');
-        update_days_left(frm, 'custom_emirates_id_expiry_date', 'custom_emirated_id_expiry_days');
+        
+    },
+    
+    on_load: function(frm) {
+        if (!frm.doc.__islocal && !frm.doc.__days_updated) {
+            update_days_left(frm, 'valid_upto', 'custom_days_left_passport');
+            update_days_left(frm, 'custom_emirates_id_expiry_date', 'custom_emirated_id_expiry_days');
+
+            frm.set_value('__days_updated', 1);
+            frm.save();
+        }
+
         frm.set_df_property('custom_days_left_passport', 'read_only', 1);
         frm.set_df_property('custom_emirated_id_expiry_days', 'read_only', 1);
-    }
+        
+    },
+
+    // refresh: function(frm) {
+    //     update_days_left(frm, 'valid_upto', 'custom_days_left_passport');
+    //     update_days_left(frm, 'custom_emirates_id_expiry_date', 'custom_emirated_id_expiry_days');
+    //     frm.set_df_property('custom_days_left_passport', 'read_only', 1);
+    //     frm.set_df_property('custom_emirated_id_expiry_days', 'read_only', 1);
+       
+    
+    // }
 });
 
 function update_days_left(frm, date_field, target_field) {
@@ -27,6 +46,7 @@ function update_days_left(frm, date_field, target_field) {
     } else {
         frm.set_value(target_field, 0);
     }
+    
 } 
 
 
