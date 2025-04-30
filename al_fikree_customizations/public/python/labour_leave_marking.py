@@ -108,13 +108,34 @@ def create_leave_attendance(
 
 
 def on_cancel(doc, event):
+    print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
     # Cancel Labour Attendance
-    labour_attendance_list = frappe.get_all(
+    attendance_list = frappe.get_all(
         "Attendance",
         filters={"custom_reference_labour_attendance_and_overtime": doc.name},
         fields=["name"],
     )
+    for la in attendance_list:
+        attendance = frappe.get_doc("Attendance", la.name)
+        if attendance.docstatus == 1:  # Ensure it's submitted before canceling
+            attendance.cancel()
+
+    labour_attendance_list = frappe.get_all(
+        "Labour Attendance",
+        filters={"custom_reference_labour_attendance_and_overtime": doc.name},
+        fields=["name"],
+    )
     for la in labour_attendance_list:
-        labour_attendance = frappe.get_doc("Attendance", la.name)
+        labour_attendance = frappe.get_doc("Labour Attendance", la.name)
         if labour_attendance.docstatus == 1:  # Ensure it's submitted before canceling
             labour_attendance.cancel()
+
+    overtime_attendance_list = frappe.get_all(
+        "Overtime Attendance",
+        filters={"custom_reference_labour_attendance_and_overtime": doc.name},
+        fields=["name"],
+    )
+    for la in overtime_attendance_list:
+        overtime_attendance = frappe.get_doc("Overtime Attendance", la.name)
+        if overtime_attendance.docstatus == 1:  # Ensure it's submitted before canceling
+            overtime_attendance.cancel()
