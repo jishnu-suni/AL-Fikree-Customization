@@ -219,6 +219,7 @@ app_include_js = [
     "/assets/al_fikree_customizations/js/ticket_allowance_creation.js",
     "/assets/al_fikree_customizations/js/autofetch_expiry_employee.js",
     "/assets/al_fikree_customizations/js/wage_from_salary_structure.js",
+    "/assets/al_fikree_customizations/js/payroll_entry_custom_button.js",
 ]
 
 
@@ -243,3 +244,7 @@ doc_events = {
 }
 
 
+# override_whitelisted_methods = {
+# 	"bs_customisations.public.python.payroll_entry.get_emp_list": 
+#     "al_fikree_customizations.public.python.payroll_entry.get_emp_list",
+# }

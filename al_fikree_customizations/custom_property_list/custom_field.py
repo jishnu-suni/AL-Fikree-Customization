@@ -1516,5 +1516,14 @@ CUSTOM_FIELD = {
             "options":"Labour Attendance And Overtime"
 
         },
-    ]
+    ],
+    "Payroll Entry": [
+        {
+            "dt": "Payroll Entry",
+            "fieldname": "custom_fetch_employee",
+            "fieldtype": "Button",
+            "label": "Get Employees",
+            "insert_after": "section_break_24",
+        },
+    ],
     }
